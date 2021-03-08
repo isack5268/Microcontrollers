@@ -5,4 +5,4 @@ Here you will find all our developments and projects on various microcontrollers
 
 # Arduino:
 
-1 Allias + горячая картошка по командам
+1. Allias + горячая картошка по командам
