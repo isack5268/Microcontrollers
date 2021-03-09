@@ -111,7 +111,7 @@
 								На данный момент мы  разрабатываем проекты в сфере микроконтроллеров и движка Unity. Во время разработки мы будем выкладывать в открытый доступ некоторые наши наработки, которые ты можешь использовать в своих целях.
 								</p>
 							</div>
-							<a href="https://github.com/isack5268/Unity2D-projects" target="_blank">
+							<a href="https://github.com/isack5268/PancakeFaces-projects" target="_blank">
 							<div class="github-btn-button">
 								<div class="github-ico-button">
 								</div>
