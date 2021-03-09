@@ -178,6 +178,15 @@
 				<span>Подробное руководство</span>
 			</div>
 			</a>
+			<!-- Next Category -->
+			<div class="sidebar-tx1-subtitle darkmode-navsidebar-txt">
+				<span>Установка и настройка ESP8266</span>
+			</div>
+			<a href="#links" rel="anchor-select">
+			<div class="sidebar-tx2-subtitle darkmode-txt">
+				<span>Полезные ссылки</span>
+			</div>
+			</a>
 			<!-- End -->
 		</div>
 	</div>
