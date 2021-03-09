@@ -8,7 +8,7 @@
 		<div class="content-con-inside">
 			<div class="menu-tx1-cookies">
 				<p>
-				Этот веб-сайт использует файлы cookie, чтобы обеспечить вам наилучший опыт. Некоторые данные могут быть использованы для анализа. <a href="/disclaimer">See full disclaimer</a>
+				Этот веб-сайт использует файлы cookie, чтобы обеспечить вам наилучший опыт. Некоторые данные могут быть использованы для анализа. <a href="/disclaimer">Смотри дисклеймер</a>
 				</p>
 			</div>
 			<div class="menu-btn-cookies">

@@ -55,13 +55,13 @@
 										<span>GitHub</span>
 									</div>
 									<div class="footer-tx2-bound">
-										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/main/Microcontrollers" target="_blank">
+										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/master/Microcontrollers" target="_blank">
 										<span>Microcontrollers</span>
 										</a>
-										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/main/Unity2D-projects" target="_blank">
+										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/master/Unity2D-projects" target="_blank">
 										<span>Unity2D</span>
 										</a>
-										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/main/Unity3D-projects" target="_blank">
+										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/master/Unity3D-projects" target="_blank">
 										<span>Unity3D</span>
 										</a>
 										</a>
@@ -108,7 +108,7 @@
 										</a>
 									</div>
 									<div class="footer-tx2-bound">
-										<a href="https://github.com/isack5268/PancakeFaces-projects/blob/main/Site.zip" target="_blank">
+										<a href="https://github.com/isack5268/PancakeFaces-projects/tree/master/Website" target="_blank">
 										<span>Сайт</span>
 										</a>
 									</div>
