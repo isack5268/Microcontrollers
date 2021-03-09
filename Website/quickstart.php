@@ -498,8 +498,42 @@
 				</div>
 				<div class='list-tx2-description darkmode-txt'>
 					<p>
-						  Вот подробное <a href="https://habr.com/ru/post/371853/">руководство</a> со всеми нюансами, по типу настройки скоростей и тд. Если что-то непонятно, то почитай.
+						  Вот подробное <a href="https://habr.com/ru/post/371853/" target="_blank">руководство</a> со всеми нюансами, по типу настройки скоростей и тд. Если что-то непонятно, то почитай.
 					</p>
+				</div>
+			</div>
+			<div class="container-con-block darkmode-block">
+				<div class="anchor-point" id="links">
+				</div>
+				<div class="container-con-wrapper">
+					<div class="container-tx1-block darkmode-txt">
+						<h2>Полезные ссылки!</h2>
+					</div>
+					<a href="https://docs.unity3d.com/2021.1/Documentation/Manual/index.html" target="_blank">
+					<div class="container-tx2-block darkmode-txt">
+						<b>• Документация Unity 2021</b>
+					</div>
+					</a>
+					<a href="https://code.visualstudio.com/docs/other/unity" target="_blank">
+					<div class="container-tx2-block darkmode-txt">
+						<b>• Unity + VS Code</b>
+					</div>
+					</a>
+					<a href="https://www.arduino.cc/reference/en/" target="_blank">
+					<div class="container-tx2-block darkmode-txt">
+						<b>• Arduino: функции, переменные, условные циклы и тд.</b>
+					</div>
+					</a>
+					<a href="https://javarush.ru/groups/posts/2683-nachalo-rabotih-s-git-podrobnihy-gayd-dlja-novichkov" target="_blank">
+					<div class="container-tx2-block darkmode-txt">
+						<b>• Технология Git для начинающих</b>
+					</div>
+					</a>
+					<a href="https://arduinomaster.ru/platy-arduino/arduino-esp8266/" target="_blank">
+					<div class="container-tx2-block darkmode-txt">
+						<b>• Все о ESP модулях</b>
+					</div>
+					</a>
 				</div>
 			</div>
 		</div>
