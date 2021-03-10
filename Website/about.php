@@ -321,6 +321,66 @@
 						</div>
 					</div>
 				</div>
+				<div class="user-con-content darkmode-txt">
+					<div class='user-img-avatar' style="background: url('/img/users/avatars/suchasaltyboy.png') no-repeat center; background-size: cover;">
+						<div class='user-img-flag' style="background: url('/img/users/flags/russia.png') no-repeat center; background-size: cover;">
+						</div>
+					</div>
+					<div class="user-con-wrapper">
+						<div class='user-tx1-content darkmode-txt'>
+							<span class="user-tx2-member ">
+							suchasaltyboy </span>
+							<span class="user-con-role user-role-founder">
+							Ведущий Видеомонтажер </span>
+						</div>
+						<div class='user-con-divider role-lead darkmode-divider'>
+						</div>
+						<div class='user-tx3-content darkmode-txt'>
+							<span>
+
+							</span>
+						</div>
+						<div class="user-con-specsheet">
+							<div class="user-con-specbox">
+								<div class="specbox-con-part darkmode-invert">
+									<div class="specbox-ico-part" style="background: url('/img/icons/list/desktop.png') no-repeat center;">
+									</div>
+									<div class="specbox-tx1-part">
+										 <span>Desktop</span>
+									</div>
+								</div>
+								<div class="specbox-con-part darkmode-invert">
+									<div class="specbox-ico-part" style="background: url('/img/icons/list/cpu.png') no-repeat center;">
+									</div>
+									<div class="specbox-tx1-part">
+										 <span></span>
+									</div>
+								</div>
+								<div class="specbox-con-part darkmode-invert">
+									<div class="specbox-ico-part" style="background: url('/img/icons/list/gpu.png') no-repeat center;">
+									</div>
+									<div class="specbox-tx1-part">
+										 <span></span>
+									</div>
+								</div>
+								<div class="specbox-con-part darkmode-invert">
+									<div class="specbox-ico-part" style="background: url('/img/icons/list/ram.png') no-repeat center;">
+									</div>
+									<div class="specbox-tx1-part">
+										 <span></span>
+									</div>
+								</div>
+								<div class="specbox-con-part darkmode-invert">
+									<div class="specbox-ico-part" style="background: url('/img/icons/list/os.png') no-repeat center;">
+									</div>
+									<div class="specbox-tx1-part">
+										 <span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
