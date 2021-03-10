@@ -1,4 +1,8 @@
-# Pancake Faces project
-Сейчас ты находишься в корне, здесь ты найдешь все наши проекты и наработки.
+# Microcontrollers
+Тут ты найдешь все наши наработки и проекты на различных микроконтроллерах
 
-Now you are in the root folder, here you will find all our projects and developments.
+Here you will find all our developments and projects on various microcontrollers (if you don't know Russian - use google translate pls)
+
+# Arduino:
+
+1. Allias + горячая картошка по командам
