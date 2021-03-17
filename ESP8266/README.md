@@ -1,3 +1,3 @@
-# Тут пока пусто(
+# Unfinished projects
 
-# It's still empty(
+1. HotPotato Game
