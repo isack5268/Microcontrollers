@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <ESP8266TrueRandom.h>
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);                                                                                                                                  
 
@@ -27,14 +28,14 @@ static const unsigned char PROGMEM logo[] = {
 
 String words[] = {"Памперс", "Киллер", "Ассасин", "Майнкрафт", "Кондиционер", "Мама", "Бомж", "Дебил", "Карл", "Фетиш", "Игрушка", "Скрипка", "Баян", "Водка", "Пиво", "Колесо", "Машина", "Кружка", "Рот", "Батарейка"};
 const int wordsSize = sizeof(words) / sizeof(String);
-int soundPin = 13, rung = 0;
-bool check1 = false;
+int soundPin = 13, rung = 1;
+unsigned long startTime = 0;
+bool check1 = false, timeGo = false;
 
 void setup() {
   pinMode (soundPin, OUTPUT);
   pinMode(12, OUTPUT);
   digitalWrite(12,HIGH);
-  randomSeed(analogRead(0));
   Serial.begin(115200);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); 
   display.clearDisplay(); 
@@ -58,18 +59,9 @@ void setup() {
   display.write(101); //e
   display.write(115); //s
   display.display();
-  delay(3000);
-  display.clearDisplay();
-  display.setTextSize(1,2);             
+  delay(1500);           
   display.setTextColor(WHITE); 
-  display.drawRoundRect (1, 1, 127, 63, 5, 1);       
-  display.setCursor(15,15);             
-  display.println(utf8rus("Добро пожаловать"));
-  display.setCursor(47,35);
-  display.println(utf8rus("мастер!"));
-  display.display();
-  Random();
-  delay(2000);
+  Random(1);
 }
 
 void loop() {
@@ -78,48 +70,39 @@ void loop() {
   if(rung >= wordsSize){
     Serial.println("Over");
     rung = 1;
-    Random();
+    Random(1);
+  }
+
+  if(timeGo && millis() >= startTime + ESP8266TrueRandom.random(50, 70)){
+    startTime = 0;
+    timeGo = false;
+    display.clearDisplay();
+    display.drawRoundRect (1, 1, 127, 63, 5, 1);    
+    display.setTextSize(2);                  
+    display.setCursor(5, 15);
+    tone (soundPin, 2000, 200);
+    display.println(utf8rus("Раунд"));
+    display.setCursor(5, 35);
+    display.println(utf8rus("окончен"));
+    display.display();;
+    delay(1500);
   }
 
   if(!but1 && !check1){
     check1 = true;
-    Serial.println(wordsSize);
+
+    if(!timeGo){
+      timeGo = true;
+      startTime = millis();
+    }
+    
     Output(rung);
     rung++;
     tone (soundPin, 600, 200);
   }
-  else if(but1) 
+  else if(but1)
     check1 = false;
 }
-
-void Output(int num){ 
-  display.clearDisplay();
-  display.setTextSize(1.5);             
-  display.setTextColor(WHITE);        
-  display.setCursor(0, 32);
-  display.println(utf8rus(words[num]));
-  display.display();;
-}
-
-void Random(){
-  for (int i = 0; i < wordsSize; i++){
-    int j = random(0, wordsSize - i);
-    String t = words[i];
-    
-    words[i] = words[j];
-    words[j] = t;
-  }
-}
-
-/*int SpaceEnum(){
-  int spaces = 0;
-  
-  for(int i = 0; i < wordsSize; i++){
-    if(words[i] == ' ')
-      spaces++;
-  }
-  return spaces;
-}*/
 
 String utf8rus(String source)
 {
@@ -150,3 +133,39 @@ String utf8rus(String source)
   }
 return target;
 }
+
+void Output(int num){ 
+  display.clearDisplay();
+  display.drawRoundRect (1, 1, 127, 63, 5, 1);    
+  display.setTextSize(2);                  
+  display.setCursor(5, 25);
+  display.println(utf8rus(words[num]));
+  display.display();;
+}
+
+void Random(int i){
+  switch(i){
+    case 1:
+      for (int i = 0; i < wordsSize; i++){
+        int j = ESP8266TrueRandom.random(0, wordsSize - i);
+        String t = words[i];
+        words[i] = words[j];
+        words[j] = t;
+      }
+    break;
+  }
+}
+
+
+
+/*void WordsUpdate(){
+  String str = "";
+  
+  if (Serial.available() > 0) {
+    str = Serial.readString();
+    
+  for(int i = 0; i < wordsSize; i++){
+    if(words[i] == ' ')
+      spaces++;
+  }
+}*/
