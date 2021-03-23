@@ -3,8 +3,11 @@
 #include <Adafruit_SSD1306.h>
 #include <ESP8266TrueRandom.h>
 
-#define cButton 14  // центральная кнопка
+#define cButton1 14  // центральная кнопка
+#define cButton2  2  // правая кнопка
+#define cButton3 12  // левая кнопка
 #define soundPin 13  // пин пищалки
+#define dispPin 15  // пин питания дисплея
 
 Adafruit_SSD1306 display(128, 32, &Wire, -1);  // инициализируем дисплей                                                                                                                              
 
@@ -22,16 +25,21 @@ String words[] = {"подпись", "вырез", "гранит", "кругоз�
 unsigned const int wordsSize = sizeof(words) / sizeof(String);  // размер словаря
 unsigned int rung = 1;
 unsigned long startTime = 0;
-bool check1 = false, timeGo = false;
+bool check1 = false, check2 = false, check3 = false, timeGo = false;
 
 void setup() {
   pinMode (soundPin, OUTPUT);
-  pinMode(cButton, OUTPUT);
-  digitalWrite(cButton,HIGH);
+  pinMode(cButton1, OUTPUT);
+  pinMode(cButton1, INPUT_PULLUP);
+  digitalWrite(cButton1,HIGH);
+  pinMode(cButton2, OUTPUT);
+  digitalWrite(cButton2,HIGH);
+  pinMode(cButton3, OUTPUT);
+  digitalWrite(cButton3,HIGH);
+  pinMode(dispPin, OUTPUT);
+  digitalWrite(dispPin, HIGH);
   
   Serial.begin(115200);
-  Random(1);
-  
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // определяем дисплей по адресу 0x3C
   display.clearDisplay(); 
   display.cp437(true);  // задаем сдвиг под символам на вывод
@@ -56,36 +64,46 @@ void setup() {
   display.write(101); // e
   display.write(115); // s
   display.display();
+  tone (soundPin, 600, 200); // пиликаем
+  Random(1);
   delay(1500);  
 }
 
 void loop() {
-  bool but1 = digitalRead(cButton); // читаем состояние кнопки и переводим в булевую
+  bool but1 = !digitalRead(cButton1); // читаем состояние центральной кнопки и переводим в булевую
+  bool but2 = !digitalRead(cButton2); // читаем состояние правой кнопки и переводим в булевую
+  bool but3 = !digitalRead(cButton3); // читаем состояние левой кнопки и переводим в булевую
 
-  if(rung = wordsSize){
+  if(rung == wordsSize){
     Serial.println("Over");
     rung = 1;
     Random(1);
   } // когда мы прошли весь словарь - решафлим его и пускаем заново
 
-  if(timeGo && millis() >= startTime + 60000){
+  if(timeGo && millis() >= startTime + 6000){
     startTime = 0;
     timeGo = false;
     display.clearDisplay();
     display.drawRoundRect (1, 1, 127, 31, 5, 1);    
     display.setTextSize(1,2);                  
-    display.setCursor(25, 10);
+    display.setCursor(30, 10);
     tone (soundPin, 2000, 200);
-    display.println(utf8rus("Раунд"));
-    display.setCursor(60, 10);
+    display.println(utf8rus("раунд"));
+    display.setCursor(62, 10);
     display.println(utf8rus("окончен"));
-    display.display();;
+    display.display();
     delay(1500);
+    display.clearDisplay();
+    display.drawRoundRect (1, 1, 127, 31, 5, 1); 
+    display.setTextSize(1,2);
+    display.setCursor(10, 7);
+    display.println(utf8rus("введите победителя"));
+    display.display();
   } // окончание времени на раунд
 
-  if(!but1 && !check1){ // начало раунда по нажатию кнопки
+  if(but1 && !check1){ // начало раунда по нажатию кнопки
     check1 = true;
-
+    
     if(!timeGo){
       timeGo = true;
       startTime = millis();
@@ -95,8 +113,25 @@ void loop() {
     rung++;
     tone (soundPin, 600, 200); // пиликаем
   }
-  else if(but1)
+  else if(!but1)
     check1 = false;
+
+  if(but2 && !check2){ // листаем вправо
+    check2 = true;
+    tone (soundPin, 600, 200); // пиликаем;
+    Serial.print("2");
+  }
+  else if(!but2)
+    check2 = false;
+
+  if(but3 && !check3){ // листаем направо
+    check3 = true;
+    Serial.print("3");
+    tone (soundPin, 600, 200); // пиликаем
+  }
+  else if(!but3)
+    check3 = false;
+    
 }
 
 String utf8rus(String source){ // перевод латиницы в кириллицу
@@ -131,10 +166,106 @@ return target;
 void Output(int num){  // вывод слова на экран
   display.clearDisplay();
   display.drawRoundRect (1, 1, 127, 31, 5, 1);    
-  display.setTextSize(1,2);                  
-  display.setCursor(15, 10);
-  display.println(utf8rus(words[num]));
+  display.setTextSize(1,2);                 
+
+  switch (words[num].length() / 2){
+    case 2:
+      display.setCursor(60, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 3:  //
+      display.setCursor(56, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 4:  //
+      display.setCursor(53, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 5:  //
+      display.setCursor(50, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 6:  //
+      display.setCursor(47, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 7:  //
+      display.setCursor(44, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 8:  //
+      display.setCursor(41, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 9:  //
+      display.setCursor(38, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 10:
+      display.setCursor(35, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 11:  //
+      display.setCursor(32, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 12:
+      display.setCursor(29, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 13:
+      display.setCursor(26, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 14:
+      display.setCursor(23, 14);
+      display.println(utf8rus(words[num]));
+      break;
+
+    case 15:
+      display.setCursor(20, 14);
+      display.println(utf8rus(words[num]));
+      break;
+  }
+  Score(); 
   display.display();;
+}
+
+void Score(){
+  display.setTextSize(1,1);
+  display.setCursor(5, 3);
+  display.write(35);
+  display.setCursor(15, 3);
+  display.write(35);
+  display.setCursor(25, 3);
+  display.write(35);
+  display.setCursor(35, 3);
+  display.write(35);
+  display.setCursor(45, 3);
+  display.write(35);
+  display.setCursor(118, 3);
+  display.write(35);
+  display.setCursor(108, 3);
+  display.write(35);
+  display.setCursor(98, 3);
+  display.write(35);
+  display.setCursor(88, 3);
+  display.write(35);
+  display.setCursor(78, 3);
+  display.write(35);
+  
 }
 
 void Random(int i){ // шафлим словарь
@@ -149,8 +280,6 @@ void Random(int i){ // шафлим словарь
     break;
   }
 }
-
-
 
 /*void WordsUpdate(){
   String str = "";
