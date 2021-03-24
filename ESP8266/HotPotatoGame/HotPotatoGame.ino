@@ -20,12 +20,23 @@ static const unsigned char PROGMEM logo[] = {
   0xEC, 0xCF, 0x03, 0x7C, 0xF0, 0x03, 0x1C, 0x9F, 0x03, 0xFE, 0xFB, 0x03, 
   0x3C, 0xCA, 0x03, 0xE8, 0xBF, 0x01, 0x70, 0x60, 0x00, 0x00, 0x1F, 0x00, };  // добавляем лого
 
- // словарь
+unsigned const int startMelody[] = {440, 165, 440, 0, 440, 165, 440, 0, 330, 330, 262, 494, 440, 494, 262, 294, 330, 165, 440, 0};
+unsigned const int times1[] = {250, 250, 250, 250, 250, 250, 250, 250, 125, 125, 125, 125, 125, 125, 125, 125, 250, 250, 250, 250};
+
+int  roundMelody[] = {329, 392, 392, 329, 440, 392, 440, 392, 440, 392, 440, 392, 440, 493};
+int  durations2[]  = {300, 600, 300, 600, 300, 300, 300, 300, 300, 300, 300, 300, 300, 600 };
+int  times2[]  = {200, 800, 200, 800, 200, 200, 200, 200, 200, 200, 200, 200, 200, 500 };
+
+int rightMelody[] = {1318, 1318, 1318, 1046, 1318, 1568, 784, 1046, 784, 659, 880, 987, 932, 880, 784, 1318, 1568, 1750, 1396, 1568, 1318, 1046, 1174, 987, 1046, 784, 659, 880, 987, 932, 880, 784, 1318, 1568, 1750, 1396, 1568, 1318, 1046, 1174, 987, 1568, 1480, 1396, 1244, 1318, 830, 880, 1046, 880, 1046, 1174, 0, 1568, 1480, 1396, 1244, 1318, 2093, 2093, 2093, 1568, 1480, 1396, 1244, 1318, 830, 880, 1046, 880, 1046, 1174, 1244, 1174, 1046};
+int duration3[] = {150, 300, 150, 150, 300, 600, 600, 450, 150, 300, 300, 150, 150, 300, 210, 210, 150, 300, 150, 150, 300, 150, 150, 450, 450, 150, 300, 300, 150, 150, 300, 210, 210, 150, 300, 150, 150, 300, 150, 150, 450, 150, 150, 150, 300, 150, 150, 150, 150, 150, 150, 150, 0, 150, 150, 150, 300, 150, 300, 150, 600, 150, 150, 150, 300, 150, 150, 150, 150, 150, 150, 150, 300, 450, 600};
+int times3[] = {150, 300, 300, 150, 300, 600, 600, 450, 450, 450, 300, 300, 150, 300, 210,210, 150, 300, 150, 300, 300, 150, 150, 450, 450, 450, 450, 300, 300, 150, 300, 210, 210, 150, 300, 150, 300, 300, 150, 150, 600, 150, 150, 150, 300, 300, 150, 150, 300, 150, 150, 150, 300, 150, 150, 150, 300, 300, 300, 150, 600, 150, 150, 150, 300, 300, 150, 150, 300, 150, 150, 450, 450, 450, 1200};
+
+// словарь
 String words[] = {"подпись", "вырез", "гранит", "кругозор", "блузка", "фараон", "клапан", "ёж", "вымя", "турист", "колготки", "стоп-кран", "питание", "свёрток", "дочерь", "шампунь", "броня", "зайчатина", "гимназист", "стелька", "подделка", "виза", "затычка", "решение", "алкоголь", "шуруп", "воровка", "колодец", "кабан", "команда", "бордель", "ловушка", "буква", "опера", "сектор", "математика", "пароварка", "невезение", "глубина", "штука", "справочник", "вождь", "хобот", "ширинка", "усталость", "служитель", "жар", "спальная", "видео", "рот", "просьба", "фишка", "рукопись", "ракетчик", "каблук", "шрифт", "палец", "ножка", "халва", "черника", "незнайка", "компания", "работница", "мышь", "исследование", "кружка", "мороженое", "сиденье", "пулемёт", "печь", "солист", "свёкла", "стая", "зелье", "дума", "посылка", "коготь", "семафор", "брат", "различие", "плоскостопие", "двигатель", "сфера", "тюльпан", "затвор", "внедорожник", "самурай", "стан", "алгоритм", "параграф", "глаз", "медалист", "пульт", "поводок", "подлежащее", "ор", "бунт", "удочка", "лес", "диспетчер", "монитор", "вдова", "пиратство", "астролог", "сосед", "пуп", "изобретатель", "чума", "танец", "затишье", "пластелин", "йог", "маска", "блоха", "судьба", "сияние", "рукавица", "филе", "заплыв", "сёмга", "гиппопотам", "мастер", "походка", "ландыш", "яблоня", "кляча", "лиса", "свёртываемость", "раствор", "соты", "солод", "спорт", "шифер", "прощение", "стопка", "побег", "простота", "запах", "беседа", "варенье", "пароль", "актёр", "вырубка", "гвоздь", "шкаф", "скальпель", "гонг", "профессор", "казан", "скорбь", "извоз", "добавка", "тропа", "шеф", "космонавт", "грифель", "лауреат", "ромб", "борец", "звон", "канистра", "олимпиада", "оплата", "спирт", "баян", "перекрёсток", "влажность", "лотерея", "насморк", "оправдание", "мушкетёр", "мороз", "утюг", "санитария", "опрятность"};
 unsigned const int wordsSize = sizeof(words) / sizeof(String);  // размер словаря
-unsigned int rung = 1;
+unsigned int rung = 1, score1 = 0, score2 = 0, rndTime = 0;
 unsigned long startTime = 0;
-bool check1 = false, check2 = false, check3 = false, timeGo = false;
+bool check1 = false, timeGo = false, change = false;
 
 void setup() {
   pinMode (soundPin, OUTPUT);
@@ -45,9 +56,9 @@ void setup() {
   display.cp437(true);  // задаем сдвиг под символам на вывод
   display.setRotation(2);  // задаем поворот экрана
   display.setTextColor(WHITE); 
-  delay(2000);
+  delay(1000);
   
-  display.drawXBitmap(128 / 2 - logo_width / 2, 0, logo, logo_width, logo_height, 1);
+  display.drawXBitmap(128 / 2 - logo_width / 2, 0, logo, logo_width, logo_height, 1);  // рисуем лого
   display.display();
   display.setTextSize(1);
   display.setCursor(27, 25);
@@ -64,9 +75,13 @@ void setup() {
   display.write(101); // e
   display.write(115); // s
   display.display();
-  tone (soundPin, 600, 200); // пиликаем
-  Random(1);
-  delay(1500);  
+  Random(1); 
+  rndTime = ESP8266TrueRandom.random(3000, 10000);
+  
+  for (int i = 0; i < sizeof(startMelody) / sizeof(int); i++){
+    tone(soundPin, startMelody[i], times1[i]);
+    delay(times1[i]);
+  }
 }
 
 void loop() {
@@ -80,58 +95,145 @@ void loop() {
     Random(1);
   } // когда мы прошли весь словарь - решафлим его и пускаем заново
 
-  if(timeGo && millis() >= startTime + 6000){
+  if(timeGo && millis() >= startTime + rndTime){
     startTime = 0;
     timeGo = false;
     display.clearDisplay();
     display.drawRoundRect (1, 1, 127, 31, 5, 1);    
     display.setTextSize(1,2);                  
-    display.setCursor(30, 10);
-    tone (soundPin, 2000, 200);
-    display.println(utf8rus("раунд"));
-    display.setCursor(62, 10);
-    display.println(utf8rus("окончен"));
+    display.setCursor(25, 7);
+    display.println(utf8rus("раунд окончен"));
     display.display();
-    delay(1500);
+    
+    for (int i=0; i < sizeof(roundMelody) / sizeof(int); i++){
+      tone(soundPin, roundMelody[i], durations2[i]);
+      delay(times2[i]);
+    }
+    
     display.clearDisplay();
     display.drawRoundRect (1, 1, 127, 31, 5, 1); 
     display.setTextSize(1,2);
     display.setCursor(10, 7);
     display.println(utf8rus("введите победителя"));
     display.display();
-  } // окончание времени на раунд
+    change = true;
+    
+    while(change){
+      bool but2 = !digitalRead(cButton2); // читаем состояние правой кнопки и переводим в булевую
+      bool but3 = !digitalRead(cButton3); // читаем состояние левой кнопки и переводим в булевую
+      
+      if(but2){  // 
+        score2 += 1;
+        change = false;
+        tone (soundPin, 600, 200); // пиликаем;
+      }  
+
+      if(but3){  // 
+        score1 += 1;
+        change = false;
+        tone (soundPin, 600, 200); // пиликаем;
+      } 
+
+      delay(50);
+    }
+
+    if(score1 != 5 && score2 != 5){
+      display.clearDisplay();
+      display.setCursor(19, 7);
+      display.println(utf8rus("продолжаем через"));
+      display.display();
+      delay(1500);
+
+      for(int i = 0; i < 4; i++){
+        if(i < 3){
+          display.clearDisplay();
+          display.setTextSize(2);
+          display.setCursor(60, 5);
+          display.println(3 - i);
+          display.display();
+          tone (soundPin, 600, 200); // пиликаем;
+        }
+        else{
+          display.clearDisplay();
+          display.setTextSize(2);
+          display.setCursor(25, 5);
+          display.println(utf8rus("погнали"));
+          display.display();
+          tone (soundPin, 1500, 500); // пиликаем;
+        }
+        delay(1000);
+      }
+      
+      StartRound();
+    }
+    else{
+      display.clearDisplay();
+
+      if(score2 == 5){
+        display.setCursor(18, 7);
+        display.drawRoundRect (1, 1, 127, 31, 5, 1); 
+        display.println(utf8rus("победили правые!"));
+        display.display();
+        score1 = 0;
+        score2 = 0;
+        
+        for (int i = 0; i < sizeof(rightMelody) / sizeof(int); i++){  // мелодия 
+          tone(soundPin, rightMelody[i], duration3[i]);
+          delay(times3[i]);
+        }
+      }
+      else{
+        display.setCursor(20, 7);
+        display.drawRoundRect (1, 1, 127, 31, 5, 1); 
+        display.println(utf8rus("победили левые!"));
+        display.display();
+        score1 = 0;
+        score2 = 0;
+        
+        for (int i = 0; i < sizeof(rightMelody) / sizeof(int); i++){  // мелодия 
+          tone(soundPin, rightMelody[i], duration3[i]);
+          delay(times3[i]);
+        }
+      }
+
+      display.clearDisplay();
+      display.setTextSize(1,2);
+      display.setCursor(20, 7);
+      display.println(utf8rus("погнали дальше?"));
+      display.display();
+      change = true;
+
+      while(change){
+        bool but1 = !digitalRead(cButton1); // читаем состояние центральной кнопки и переводим в булевую
+        
+        if(but1){
+          change = false;
+          tone (soundPin, 600, 200); // пиликаем;
+          
+          for(int i = 0; i < 3; i++){
+            display.clearDisplay();
+            display.setTextSize(2);
+            display.setCursor(60, 5);
+            display.println(3 - i);
+            display.display();
+            tone (soundPin, 600, 200); // пиликаем;
+            delay(1000);
+          }
+          
+          StartRound(); 
+        }
+
+        delay(50);
+      }
+    }
+  }
 
   if(but1 && !check1){ // начало раунда по нажатию кнопки
     check1 = true;
-    
-    if(!timeGo){
-      timeGo = true;
-      startTime = millis();
-    } // начинаем отсчет
-    
-    Output(rung);
-    rung++;
-    tone (soundPin, 600, 200); // пиликаем
+    StartRound();
   }
   else if(!but1)
-    check1 = false;
-
-  if(but2 && !check2){ // листаем вправо
-    check2 = true;
-    tone (soundPin, 600, 200); // пиликаем;
-    Serial.print("2");
-  }
-  else if(!but2)
-    check2 = false;
-
-  if(but3 && !check3){ // листаем направо
-    check3 = true;
-    Serial.print("3");
-    tone (soundPin, 600, 200); // пиликаем
-  }
-  else if(!but3)
-    check3 = false;
-    
+    check1 = false;    
 }
 
 String utf8rus(String source){ // перевод латиницы в кириллицу
@@ -161,6 +263,19 @@ String utf8rus(String source){ // перевод латиницы в кирил�
     m[0] = n; target = target + String(m);
   }
 return target;
+}
+
+void StartRound(){
+  rndTime = ESP8266TrueRandom.random(3000, 10000);
+  
+  if(!timeGo){
+      timeGo = true;
+      startTime = millis();
+    } // начинаем отсчет
+    
+    Output(rung);
+    rung++;
+    tone (soundPin, 600, 200); // пиликаем
 }
 
 void Output(int num){  // вывод слова на экран
@@ -239,33 +354,22 @@ void Output(int num){  // вывод слова на экран
       display.println(utf8rus(words[num]));
       break;
   }
-  Score(); 
+  Score(score1, score2); 
   display.display();;
 }
 
-void Score(){
+void Score(int a, int b){
   display.setTextSize(1,1);
-  display.setCursor(5, 3);
-  display.write(35);
-  display.setCursor(15, 3);
-  display.write(35);
-  display.setCursor(25, 3);
-  display.write(35);
-  display.setCursor(35, 3);
-  display.write(35);
-  display.setCursor(45, 3);
-  display.write(35);
-  display.setCursor(118, 3);
-  display.write(35);
-  display.setCursor(108, 3);
-  display.write(35);
-  display.setCursor(98, 3);
-  display.write(35);
-  display.setCursor(88, 3);
-  display.write(35);
-  display.setCursor(78, 3);
-  display.write(35);
-  
+
+  for(int i = 0; i < a; i++){
+    display.setCursor(5 + (i * 10), 3);
+    display.write(35);
+  }
+
+  for(int i = 0; i < b; i++){
+    display.setCursor(118 - (i * 10), 3);
+    display.write(35);
+  }
 }
 
 void Random(int i){ // шафлим словарь
