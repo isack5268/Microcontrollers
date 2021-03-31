@@ -84,8 +84,8 @@ void setup() {
   }
 
   display.clearDisplay();
-  display.setTextSize(1,2);
-  display.setCursor(20, 7);
+  display.setTextSize(2);
+  display.setCursor(25, 5);
   display.println(utf8rus("погнали?"));
   display.display();
 }
@@ -145,6 +145,26 @@ void loop() {
 
     if(score1 != 5 && score2 != 5){
       display.clearDisplay();
+      display.drawRoundRect (1, 1, 127, 31, 5, 1);
+      display.setTextSize(1,2);
+      display.setCursor(13, 7);
+      display.println(utf8rus("готовы продолжать?"));
+      display.display();
+      change = true;
+    
+      while(change){
+        bool but1 = !digitalRead(cButton1); // читаем состояние центральной кнопки и переводим в булевую
+
+        if(but1){
+          change = false;
+          tone (soundPin, 600, 200); // пиликаем;
+        }
+
+        delay(50);
+      }
+      
+      display.clearDisplay();
+      display.drawRoundRect (1, 1, 127, 31, 5, 1);
       display.setCursor(19, 7);
       display.println(utf8rus("продолжаем через"));
       display.display();
@@ -238,15 +258,25 @@ void loop() {
       while(first){
         tone (soundPin, 600, 200); // пиликаем;
           
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 4; i++){
+        if(i < 3){
           display.clearDisplay();
           display.setTextSize(2);
           display.setCursor(60, 5);
           display.println(3 - i);
           display.display();
           tone (soundPin, 600, 200); // пиликаем;
-          delay(1000);
         }
+        else{
+          display.clearDisplay();
+          display.setTextSize(2);
+          display.setCursor(28, 5);
+          display.println(utf8rus("вперед"));
+          display.display();
+          tone (soundPin, 1500, 500); // пиликаем;
+        }
+        delay(1000);
+      }
         
         first = false;
         delay(50);
@@ -299,10 +329,14 @@ void StartRound(){
   Output(rung);
   rung++;
   tone (soundPin, 600, 200); // пиликаем
-  delay(300);
+  delay(200);
 }
 
 void Output(int num){  // вывод слова на экран
+  Serial.print("Индекс = ");
+  Serial.print(num);
+  Serial.print("; Размер = ");
+  Serial.println(wordsSize);
   display.clearDisplay();
   display.drawRoundRect (1, 1, 127, 31, 5, 1);    
   display.setTextSize(1,2);                 
