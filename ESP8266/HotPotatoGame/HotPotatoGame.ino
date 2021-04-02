@@ -321,7 +321,7 @@ return target;
 void StartRound(){    
   if(!timeGo){
       timeGo = true;
-      rndTime = ESP8266TrueRandom.random(3000, 10000);
+      rndTime = ESP8266TrueRandom.random(50000, 70000);
       Serial.println(rndTime);
       startTime = millis();
     } // начинаем отсчет
