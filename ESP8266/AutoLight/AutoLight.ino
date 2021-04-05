@@ -6,13 +6,13 @@
 #define pyro_pin 12
 
 //char ssid[] = "";        
-//char pass[] = "REPLACE_WITH_YOUR_PASSWORD";   
+//char pass[] = "";   
  
 //WiFiClient client;
  
 //const char server[] = "api.openweathermap.org";
 //String nameOfCity = "Moscow,RU"; 
-//String apiKey = "480b9abf344424c67d6ff71e32034609"; 
+//String apiKey = ""; 
 
 unsigned int timer;
 
