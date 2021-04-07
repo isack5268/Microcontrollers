@@ -59,6 +59,7 @@ void setup() {
     }
   });
   ArduinoOTA.begin();
+  Serial.println(WiFi.localIP());
 }
 
 void loop() {
@@ -76,5 +77,5 @@ void loop() {
     digitalWrite(rele_pin, LOW);
   }
 
-  delay(1000);
+  //delay(1000);
 }
