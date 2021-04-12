@@ -113,8 +113,8 @@ void loop() {
 void Parse(){
   HTTPClient http;
   http.begin(host);
-  int httpCode = http.GET();            //Send the request
-  String payload = http.getString();    //Get the response payload from server
+  int httpCode = http.GET();            
+  String payload = http.getString();    
 
   if(httpCode == 200)
   {
