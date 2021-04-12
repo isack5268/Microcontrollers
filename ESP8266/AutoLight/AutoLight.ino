@@ -12,8 +12,8 @@
 
 WiFiClient client;
 
-const char* ssid = "ssid";        
-const char* pass = "pass";   
+const char* ssid = "Explabs";        
+const char* pass = "Huttka12";   
 
 const char *host = "http://api.sunrise-sunset.org/json?lat=55.75&lng=37.61";
 
@@ -90,7 +90,7 @@ void loop() {
 
   Serial.println("Hour Set: " + (String)hourSet + ";");
 
-  if(timeClient.getHours() < hourSet && timeClient.getHours() >= Hours(sunrise) + 1)
+  if(timeClient.getHours() < hourSet + 1 && timeClient.getHours() >= Hours(sunrise) + 1)
     starting = false;
   else 
     starting = true;
