@@ -12,15 +12,15 @@
 
 WiFiClient client;
 
-const char* ssid = "ssid";        
-const char* pass = "pass";   
+const char* ssid = "Explabs";        
+const char* pass = "Huttka12";   
 
 const char *host = "http://api.sunrise-sunset.org/json?lat=55.75&lng=37.61";
 
 const unsigned int utcOffsetInSeconds = 10800;
 String sunset, sunrise;
 unsigned int timer;
-bool starting = false;  // если сейчас день выставить fasle, иначе true
+bool starting = false;
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
