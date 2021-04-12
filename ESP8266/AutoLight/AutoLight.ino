@@ -12,8 +12,8 @@
 
 WiFiClient client;
 
-const char* ssid = "Explabs";        
-const char* pass = "Huttka12";   
+const char* ssid = "ssid";        
+const char* pass = "pass";   
 
 const char *host = "http://api.sunrise-sunset.org/json?lat=55.75&lng=37.61";
 
