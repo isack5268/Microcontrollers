@@ -92,16 +92,18 @@ void loop() {
 
   if(timeClient.getHours() < hourSet + 1 && timeClient.getHours() >= Hours(sunrise) + 1)
     starting = false;
-  else 
+  else
     starting = true;
 
-  if(starting){    
+  Serial.println("Millis : " + String(millis()));
+
+  if(starting){ 
     if(digitalRead(pyro_pin) == 1){
       timer = millis();
       digitalWrite(rele_pin, HIGH);
     }
 
-    if(millis() == timer + 60000){
+    if(millis() >= timer + 60000){
       timer = 0;
       digitalWrite(rele_pin, LOW);
     }
