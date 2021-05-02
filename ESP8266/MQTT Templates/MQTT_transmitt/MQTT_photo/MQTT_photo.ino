@@ -7,12 +7,12 @@
 
 #define photo_pin A0
 
-const char *ssid = "ssid";
-const char *pass = "pass";
-const char *mqtt_server = "server";
-const int mqtt_port = 2806;
-const char *mqtt_user = "login";
-const char *mqtt_pass = "pass";
+const char *ssid = "{{ ssid }}";
+const char *pass = "{{ pass }}";
+const char *mqtt_server = "{{ ip_mqtt_server }}";
+const int mqtt_port = {{ mqtt_port }};
+const char *mqtt_user = "{{ mqtt_user }}";
+const char *mqtt_pass = "{{ mqtt_password }}";
 
 WiFiClient esp_client;
 PubSubClient mqtt_client(esp_client);
