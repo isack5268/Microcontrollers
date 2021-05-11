@@ -5,8 +5,8 @@
 #include <PubSubClient.h>
 #include "ArduinoJson.h" 
 
-#define open_pin 5
-#define close_pin 4
+#define open_pin 4
+#define close_pin 5
 
 const char *ssid = "{{ ssid }}";
 const char *pass = "{{ pass }}";
@@ -18,14 +18,15 @@ const char *mqtt_pass = "{{ mqtt_password }}";
 WiFiClient esp_client;
 PubSubClient mqtt_client(esp_client);
 
-String received;
+String received = "close";
+int timer = 0;
 
 void setup() {
   Serial.begin(115200);
   pinMode(open_pin, OUTPUT);
   pinMode(close_pin, OUTPUT);
-  pinMode(open_pin, LOW);
-  pinMode(close_pin, LOW);
+  analogWrite(open_pin, 0);
+  analogWrite(close_pin, 700);
   WiFi.begin(ssid, pass);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -86,7 +87,7 @@ void setup() {
     }
   }
  
-  mqtt_client.subscribe("door/1");
+  mqtt_client.subscribe("pacs/door");
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -105,7 +106,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     return;
   }
   
-  received = root["status"].as<String>();
+  received = root["command"].as<String>();
   jsonBuffer.clear();
 }
 
@@ -113,15 +114,23 @@ void loop() {
   ArduinoOTA.handle();
   mqtt_client.loop();
   Serial.println("Decripted message: " + String(received));
+  Serial.println("Timer is " + String(timer));
 
-  if(received == "open"){
-    pinMode(open_pin, HIGH);
-    pinMode(close_pin, LOW);
+  if(received == "open" && timer == 0){
+    analogWrite(open_pin, 700);
+    analogWrite(close_pin, 0);
+    timer = millis() + 5000;
   }
-  else{
-    pinMode(open_pin, LOW);
-    pinMode(close_pin, HIGH);
+  else if(received == "close") {
+    analogWrite(open_pin, 0);
+    analogWrite(close_pin, 700);
   }
+
+  if(millis() >= timer && timer != 0){
+    timer = 0;
+    received = "close";
+  }
+    
   
   delay(1000);
 }
