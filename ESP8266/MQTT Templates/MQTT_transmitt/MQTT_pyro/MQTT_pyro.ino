@@ -99,7 +99,7 @@ void loop() {
   Serial.println("Sending message to MQTT topic..");
   Serial.println(JSONmessageBuffer);
  
-  if (mqtt_client.publish("pyro/1", JSONmessageBuffer) == true) {
+  if (mqtt_client.publish("pacs/pyro", JSONmessageBuffer) == true) {
     Serial.println("Success sending message");
   } else {
     Serial.println("Error sending message");

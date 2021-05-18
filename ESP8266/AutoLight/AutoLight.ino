@@ -17,7 +17,7 @@ const char* pass = "Huttka12";
 
 const char *host = "http://api.sunrise-sunset.org/json?lat=55.75&lng=37.61";
 
-const unsigned int utcOffsetInSeconds = 10800;
+const unsigned int utcOffsetInSeconds = 44000;
 String sunset, sunrise;
 unsigned int timer;
 bool starting = false;
@@ -110,6 +110,7 @@ void loop() {
   }
 
   Serial.println("Active: " + (String)starting);
+  Serial.println("------------------------------------------------------");
 }
 
 void Parse(){

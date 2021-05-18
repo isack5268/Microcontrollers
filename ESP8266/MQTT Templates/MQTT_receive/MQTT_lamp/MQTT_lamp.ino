@@ -17,7 +17,7 @@ const char *mqtt_pass = "{{ mqtt_password }}";
 WiFiClient esp_client;
 PubSubClient mqtt_client(esp_client);
 
-String received;
+String received = "off";
 
 void setup() {
   Serial.begin(115200);
@@ -83,7 +83,7 @@ void setup() {
     }
   }
  
-  mqtt_client.subscribe("lamp/1");
+  mqtt_client.subscribe("pacs/lamp");
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -111,10 +111,12 @@ void loop() {
   mqtt_client.loop();
   Serial.println("Decripted message: " + String(received));
 
-  if(received == "on")
-    pinMode(rele_pin, HIGH);
-  else
-    pinMode(rele_pin, LOW);
+  if(received == "on"){
+    Serial.println("ooooooooooonnnnnn");
+    digitalWrite(rele_pin, HIGH);
+  }
+  else if(received == "off")
+    digitalWrite(rele_pin, LOW);
   
   delay(1000);
 }
