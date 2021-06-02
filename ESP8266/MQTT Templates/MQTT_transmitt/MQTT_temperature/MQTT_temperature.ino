@@ -71,7 +71,7 @@ void setup() {
   while (!mqtt_client.connected()) {
     Serial.println("Connecting to MQTT...");
  
-    if (mqtt_client.connect("ESP8266Client", mqtt_user, mqtt_pass )) {
+    if (mqtt_client.connect("ESP8266_Temperature", mqtt_user, mqtt_pass )) {
  
       Serial.println("connected");  
  

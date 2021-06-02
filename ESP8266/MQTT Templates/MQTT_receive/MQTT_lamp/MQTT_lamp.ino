@@ -5,7 +5,7 @@
 #include <PubSubClient.h>
 #include "ArduinoJson.h" 
 
-#define rele_pin 5
+#define rele_pin 4
 
 const char *ssid = "{{ ssid }}";
 const char *pass = "{{ pass }}";
@@ -18,6 +18,7 @@ WiFiClient esp_client;
 PubSubClient mqtt_client(esp_client);
 
 String received = "off";
+int bright = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -73,7 +74,7 @@ void setup() {
   while (!mqtt_client.connected()) {
     Serial.println("Connecting to MQTT...");
  
-    if (mqtt_client.connect("ESP8266Client", mqtt_user, mqtt_pass )) {
+    if (mqtt_client.connect("ESP8266_Lamp", mqtt_user, mqtt_pass )) {
       Serial.println("connected");  
     } 
     else {
@@ -102,21 +103,18 @@ void callback(char* topic, byte* payload, unsigned int length) {
     return;
   }
   
-  received = root["status"].as<String>();  
+  received = root["command"].as<String>(); 
+  bright = root["bright"].as<String>().toInt(); 
+
+  if(received == "on")
+    analogWrite(rele_pin, bright);
+  else if(received == "off")
+    digitalWrite(rele_pin, LOW);
+  
   jsonBuffer.clear();
 }
 
 void loop() {
   ArduinoOTA.handle();
   mqtt_client.loop();
-  Serial.println("Decripted message: " + String(received));
-
-  if(received == "on"){
-    Serial.println("ooooooooooonnnnnn");
-    digitalWrite(rele_pin, HIGH);
-  }
-  else if(received == "off")
-    digitalWrite(rele_pin, LOW);
-  
-  delay(1000);
 }

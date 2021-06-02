@@ -1,12 +1,11 @@
+#include <Wire.h> 
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 #include <PubSubClient.h>
 #include "ArduinoJson.h" 
-
-#define open_pin 4
-#define close_pin 5
+#include <LiquidCrystal_I2C.h>
 
 const char *ssid = "{{ ssid }}";
 const char *pass = "{{ pass }}";
@@ -18,15 +17,69 @@ const char *mqtt_pass = "{{ mqtt_password }}";
 WiFiClient esp_client;
 PubSubClient mqtt_client(esp_client);
 
-String received = "close";
-int timer = 0;
+LiquidCrystal_I2C lcd(0x27,20,4);  // Устанавливаем дисплей
 
-void setup() {
+byte lamp_pic[8] = {
+0b00000,
+0b01110,
+0b10001,
+0b10001,
+0b10001,
+0b01010,
+0b01110,
+0b01110
+};
+
+byte door_pic[8] = {
+0b11111,
+0b10001,
+0b10001,
+0b11001,
+0b10001,
+0b10001,
+0b10001,
+0b11111
+};
+
+byte temp_pic[8] = {
+0b00100,
+0b01010,
+0b01010,
+0b01010,
+0b10001,
+0b11111,
+0b11111,
+0b01110
+};
+
+byte photo_pic[8] = {
+0b00000,
+0b10101,
+0b01110,
+0b11111,
+0b11111,
+0b01110,
+0b10101,
+0b00000
+};
+
+byte pyro_pic[8] = {
+0b01110,
+0b01110,
+0b00000,
+0b10001,
+0b01110,
+0b00000,
+0b10001,
+0b01110
+};
+
+int list = 0;
+String pyro, lamp, temp, door, photo; 
+
+void setup()
+{
   Serial.begin(115200);
-  pinMode(open_pin, OUTPUT);
-  pinMode(close_pin, OUTPUT);
-  analogWrite(open_pin, 0);
-  analogWrite(close_pin, 700);
   WiFi.begin(ssid, pass);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -77,7 +130,7 @@ void setup() {
   while (!mqtt_client.connected()) {
     Serial.println("Connecting to MQTT...");
  
-    if (mqtt_client.connect("ESP8266_Door", mqtt_user, mqtt_pass )) {
+    if (mqtt_client.connect("ESP8266_Display", mqtt_user, mqtt_pass )) {
       Serial.println("connected");  
     } 
     else {
@@ -86,15 +139,28 @@ void setup() {
       delay(2000);
     }
   }
- 
+  
+  lcd.init();                     
+  lcd.backlight();// Включаем подсветку дисплея
+
+  lcd.createChar(1, lamp_pic);
+  lcd.createChar(2, door_pic);
+  lcd.createChar(3, temp_pic);
+  lcd.createChar(4, photo_pic);
+  lcd.createChar(5, pyro_pic);
+
   mqtt_client.subscribe("pacs/door");
+  mqtt_client.subscribe("pacs/lamp");
+  mqtt_client.subscribe("pacs/photo");
+  mqtt_client.subscribe("pacs/pyro");
+  mqtt_client.subscribe("pacs/temp");
+  Display();
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived in topic: ");
   Serial.println(topic);
   payload[length] = '\0';
-  String str_topic = String(topic);
   String str_payload = String((char*)payload);
   Serial.println("Payload: " + String(str_payload));
 
@@ -105,32 +171,80 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.println(("Parsing failed!"));
     return;
   }
+
+  if(String(topic) == "pacs/door"){
+    Clear_Disp(0, 3, 0);
+    door = root["command"].as<String>();
+  }
+
+  if(String(topic) == "pacs/lamp"){
+    Clear_Disp(0, 1, 0);
+    lamp = root["command"].as<String>();
+  }
+
+  if(String(topic) == "pacs/pyro"){
+    Clear_Disp(0, 3, 1);
+    pyro = root["value"].as<String>();
+  }
+
+  if(String(topic) == "pacs/photo"){
+    Clear_Disp(10, 3, 0);
+    photo = root["value"].as<String>();
+  }
   
-  received = root["command"].as<String>();
+  if(String(topic) == "pacs/temp"){
+    Clear_Disp(10, 1, 0);
+    temp = root["value"].as<String>();
+  }
+  
   jsonBuffer.clear();
+  Display();
 }
 
-void loop() {
+void loop()
+{
   ArduinoOTA.handle();
   mqtt_client.loop();
-  Serial.println("Decripted message: " + String(received));
-  Serial.println("Timer is " + String(timer));
+}
 
-  if(received == "open" && timer == 0){
-    analogWrite(open_pin, 700);
-    analogWrite(close_pin, 0);
-    timer = millis() + 5000;
-  }
-  else if(received == "close") {
-    analogWrite(open_pin, 0);
-    analogWrite(close_pin, 700);
-  }
+void Display(){      
+  switch(list){
+    case 0:
+      lcd.setCursor(0, 0);
+      lcd.print(char(1));
+      lcd.print(" Lamp");
+      lcd.setCursor(1, 1);
+      lcd.print(lamp);
+      lcd.setCursor(0, 2);
+      lcd.print(char(2));
+      lcd.print(" Door");
+      lcd.setCursor(1, 3);
+      lcd.print(door);
+      lcd.setCursor(10, 0);
+      lcd.print(char(3));
+      lcd.print(" Temp.");
+      lcd.setCursor(11, 1);
+      lcd.print(temp);
+      lcd.setCursor(10, 2);
+      lcd.print(char(4));
+      lcd.print(" Light");
+      lcd.setCursor(11, 3);
+      lcd.print(photo);
+      break;
 
-  if(millis() >= timer && timer != 0){
-    timer = 0;
-    received = "close";
+    case 1:
+      lcd.setCursor(0, 0);
+      lcd.print(char(5));
+      lcd.print(" Motion");
+      lcd.setCursor(1, 1);
+      lcd.print(pyro);
+      break;
   }
-    
-  
-  delay(1000);
+}
+
+void Clear_Disp(int x, int y, int list_num){
+  if(list_num == list){
+    lcd.setCursor(x, y);
+    lcd.print("         ");
+  }
 }
